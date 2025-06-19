@@ -8,7 +8,7 @@ using namespace std;
 void explainVector(){
     //DECLARATION
     vector<int> v;
-    v.push_back(1);
+    v.push_back(1);     //insert can also be used, it increases efficiency
     v.emplace_back(2);
 
     vector<pair<int,int>> vec;
