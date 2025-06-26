@@ -39,5 +39,5 @@ int main(){
 
 }
 
-// TC -> 
-// TC -> 
+// TC -> worst and avg = 0(N^2)
+// TC -> best = 0(N)
