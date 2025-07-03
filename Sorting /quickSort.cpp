@@ -50,6 +50,7 @@ int main() {
         cout << num << " ";
     }
     cout << endl;
+    cout << "Largest element is -: "<< sortedArr.back() << endl;    // TO FIND THE LARGEST ELEMENT OF ARRAY (BRUTE FORCE APPROACH)
 
     return 0;
 }
