@@ -9,6 +9,11 @@ struct Node{
     Node* next;    // Pointer to the next node
     
     public:
+    Node(int data1 , Node* next1){
+        data = data1;
+        next = next1;
+    }
+    public:
     // Constructor to initialize node with data
     Node(int data1){
         data = data1;
@@ -16,7 +21,6 @@ struct Node{
     }
 };
 
-// Converts a vector of integers to a singly linked list
 Node* arrayToLinkedList(vector<int>& arr) {
     // Create the head node with the first element
     Node* head = new Node(arr[0]);
@@ -31,88 +35,83 @@ Node* arrayToLinkedList(vector<int>& arr) {
     return head; 
 }
 
-// Prints the linked list starting from head
 void print(Node* head){
     while(head != NULL){
         cout << head -> data << " ";
-        head = head -> next;        
+        head = head -> next;
     }
     cout << endl;
 }
 
-// Removes the head node from the linked list
-Node* removehead(Node* head){
-    if(head == NULL) return head; // If list is empty, return
-    Node* temp = head;            
-    head = head -> next;          
-    free(temp);                  
-    return head;                 
+// INSERT AT HEAD
+Node* insertHead(Node* head,int val){
+    return new Node(val , head);
+   
 }
 
-// Remove the TAIL of Linked List
-Node* removeTail(Node* head){
-    if(head == NULL || head->next == NULL) return NULL; // Check whether the list is empty or one element
-    Node* temp = head;
-    while(temp->next->next !=NULL){     // temp should point towards the second last element
-        temp = temp -> next;
+// INSERT AT TAIL
+Node* insertTail(Node* head , int val){
+    if(head == NULL){
+        return new Node(val);    // If list is empty, returns the value
     }
-    free(temp->next);
-    temp->next = nullptr;
+    Node* temp = head;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+    Node* newnode = new Node(val);
+    temp->next = newnode;
     return head;
 }
 
-// Remove kth element
-Node* removeK(Node* head , int k){
-    if(head == NULL) return head;
-    if(k == 1){
-        Node* temp = head;
-        head = head -> next;
-        free(temp);
-        return head;
+// INSERT AT A GIVEN POSITION
+Node* insertPosition(Node* head , int element , int k){
+    if(head == NULL){
+        return new Node(element);
+    }
+    if(k==1){
+        return new Node(element , head);
+        
     }
     int cnt = 0;
-    Node* prev = NULL;
     Node* temp = head;
     while(temp != NULL){
         cnt++;
-        if(cnt == k){
-            prev->next = prev->next->next;
-            free(temp);
-            break;
+        if(cnt == k-1){
+            Node* newNode = new Node(element);
+            newNode -> next = temp -> next;
+            temp->next = newNode;
         }
-        prev = temp;
-        temp = temp -> next;
+        temp = temp->next;
     }
     return head;
 }
 
-//Remove Element
-Node* removeElement(Node* head , int el){
-    if(head == NULL) return head;
-    if(head->data == el){
-        Node* temp = head;
-        head = head -> next;
-        free(temp);
-        return head;
+// INSERT BEFORE A GIVEN VALUE
+Node* insertBeforeValue(Node* head, int el, int val) {
+    if (head == NULL) {
+        return NULL;
     }
-    Node* prev = NULL;
+
+    if (head->data == val) {
+        return new Node(el, head);
+    }
+
     Node* temp = head;
-    while(temp != NULL){
-        
-        if(temp->data == el){
-            prev->next = prev->next->next;
-            free(temp);
+    while (temp->next != NULL) {
+        if (temp->next->data == val) {
+            Node* x = new Node(el, temp->next);
+            temp->next = x;
             break;
         }
-        prev = temp;
-        temp = temp -> next;
+        temp = temp->next;
     }
+
     return head;
 }
 
 int main(){
-    vector<int> arr = {7,3,2,5,6,8};         
-    Node* head = arrayToLinkedList(arr);   // Convert array to linked list
-    head = removeElement(head , 2);  
-    print(head);                          
+    vector<int> arr = {2,4,6,7,9,2};
+    Node* head = arrayToLinkedList(arr);
+    head = insertBeforeValue(head , 5 , 9);
+    print(head);
 }
