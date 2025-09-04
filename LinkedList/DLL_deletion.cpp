@@ -108,10 +108,28 @@ Node* removeKthElement(Node* head , int k){
     return head;
 }
 
+// Delete element
+Node* deleteElement(Node* temp){
+    Node* prev = temp->back;
+    Node* front = temp->next;
+    while(front == NULL){
+        prev->next = nullptr;
+        temp->back = nullptr;
+        free(temp);
+        return temp;
+    }
+    prev->next = front;
+    front->back = prev;
+    temp->next = temp->back = nullptr;
+    free(temp);
+    return temp;
+}
+
+
 int main(){
     vector<int> arr = {7,3,2,5,6,8};         
     Node* head = ArrayToDLL(arr);   // Convert array to linked list
-    head = removeKthElement(head , 1);
+    deleteElement(head->next->next->next);
     print(head);
     return 0;
 }
